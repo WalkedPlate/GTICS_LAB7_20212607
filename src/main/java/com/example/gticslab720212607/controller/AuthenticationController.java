@@ -153,6 +153,33 @@ public class AuthenticationController {
     }
 
 
+    @PutMapping(value = "/shutdownAuthentication")
+    public ResponseEntity<HashMap<String,Object>> shutdownAuthentication(@RequestParam(name = "shutdown", defaultValue = "false") boolean shutdown){
+        HashMap<String,Object> rpta = new HashMap<>();
+        List<Users> allUsers= usersRepository.findAll();
+
+
+
+        if(shutdown){
+            for (Users u : allUsers){
+                u.setActive(false);
+                usersRepository.save(u);
+            }
+            rpta.put("result","Se han desactivado todos los usuarios.");
+        }
+        else {
+            for (Users u : allUsers){
+                u.setActive(false);
+                usersRepository.save(u);
+            }
+            rpta.put("result","Se han activado todos los usuarios.");
+        }
+
+        return ResponseEntity.ok(rpta);
+
+    }
+
+
 
 
 
